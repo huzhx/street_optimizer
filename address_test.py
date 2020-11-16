@@ -68,3 +68,44 @@ def test_to_string_wo_zip():
     result = address.to_string_wo_zip()
     expected = '123 main street, Los Angeles, CA'
     assert result == expected
+
+def test_extract_street_num1():
+    address = Address('', 'Los Angeles', 'CA', '12345')
+    with pytest.raises(Exception):
+        address.extract_street_num()
+
+def test_extract_street_num2():
+    address = Address(None, 'Los Angeles', 'CA', '12345')
+    with pytest.raises(Exception):
+        address.extract_street_num()
+
+def test_extract_street_num3():
+    address = Address('123 main street', 'Los Angeles', 'CA', '12345')
+    result = address.extract_street_num()
+    expected = ['123', 'main street']
+    assert result == expected
+
+def test_extract_street_num4():
+    address = Address(' 123  main street ', 'Los Angeles', 'CA', '12345')
+    result = address.extract_street_num()
+    expected = ['123', 'main street']
+    assert result == expected
+
+def test_replace_street_num1():
+    address = Address('123 main street', 'Los Angeles', 'CA', '12345')
+    address.replace_street_num('456')
+    result = address.street
+    expected = '456 main street' 
+    assert result == expected
+
+def test_replace_street_num2():
+    address = Address(' 123  main street ', 'Los Angeles', 'CA', '12345')
+    address.replace_street_num('456')
+    result = address.street
+    expected = '456 main street' 
+    assert result == expected
+
+def test_replace_street_num3():
+    address = Address(' ', 'Los Angeles', 'CA', '12345')
+    with pytest.raises(Exception):
+        address.replace_street_num('456')
