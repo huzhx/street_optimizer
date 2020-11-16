@@ -1,4 +1,5 @@
-from utils import shift_num, remove_num
+import pytest
+from utils import shift_num, remove_num, consume_api
 
 def test_shift_num1():
     num = '1234'
@@ -59,3 +60,17 @@ def test_remove_num7():
     result = remove_num(addr)
     expected = '1 st 3ave apt'
     assert result == expected 
+
+def test_consume_api1():
+    api_endpoint = 'https://geomap.ffiec.gov/FFIECGeocMap/GeocodeMap1.aspx/GetGeocodeData'
+    payload = {}
+    with pytest.raises(Exception):
+        consume_api(api_endpoint, payload)
+
+def test_consume_api2():
+    api_endpoint = 'https://geomap.ffiec.gov/FFIECGeocMap/GeocodeMap1.aspx/GetGeocodeData'
+    payload = {"sSingleLine": "1230 Astor Ave Ann Arbor Mi", "iCensusYear": "2020"}
+    resp = consume_api(api_endpoint, payload)
+    result = resp['d']['sMatchAddr']
+    expected = '1230 ASTOR DR, ANN ARBOR, MI, 48104'
+    assert result == expected

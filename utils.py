@@ -1,4 +1,5 @@
 import re
+import requests
 
 def shift_num(num):
     ''' Return a string
@@ -22,3 +23,9 @@ def remove_num(addr):
     '''
     addr = re.sub(r'([a-zA-Z ]+)(\d+)(\W|\s|$)', r'\1', addr.strip())
     return addr.strip()
+
+def consume_api(api_endpoint, payload):
+    resp = requests.post(api_endpoint, json=payload)
+    if (resp.status_code != 200 and resp.status_code != 201):
+        raise Exception('POST {} {}'.format(api_endpoint, resp.status_code))
+    return resp.json()
