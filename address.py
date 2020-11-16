@@ -43,3 +43,9 @@ class Address:
             self._city, 
             self._state, 
             self._zipcode)
+
+    def to_string_wo_zip(self):
+        return "{}, {}, {}".format(
+            self._street, 
+            self._city, 
+            self._state)

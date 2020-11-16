@@ -62,3 +62,9 @@ def test_to_string():
     result = address.to_string()
     expected = '123 main street, Los Angeles, CA, 12345'
     assert result == expected
+
+def test_to_string_wo_zip():
+    address = Address('123 main street', 'Los Angeles', 'CA', '12345')
+    result = address.to_string_wo_zip()
+    expected = '123 main street, Los Angeles, CA'
+    assert result == expected
