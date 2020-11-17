@@ -8,14 +8,14 @@ def test_constructor():
 def test_street_getter():
     address = Address('123 main street', 'Los Angeles', 'CA', '12345')
     result = address.street
-    expected = '123 main street'
+    expected = '123 main street'.title()
     assert result == expected
 
 def test_street_setter():
     address = Address('123 main street', 'Los Angeles', 'CA', '12345')
     address.street = '456 2nd street'
     result = address.street
-    expected = '456 2nd street'
+    expected = '456 2nd street'.title()
     assert result == expected
 
 def test_city_getter():
@@ -60,13 +60,13 @@ def test_zipcode_setter():
 def test_to_string():
     address = Address('123 main street', 'Los Angeles', 'CA', '12345')
     result = address.to_string()
-    expected = '123 main street, Los Angeles, CA, 12345'
+    expected = '123 Main Street, Los Angeles, CA, 12345'
     assert result == expected
 
 def test_to_string_wo_zip():
     address = Address('123 main street', 'Los Angeles', 'CA', '12345')
     result = address.to_string_wo_zip()
-    expected = '123 main street, Los Angeles, CA'
+    expected = '123 Main Street, Los Angeles, CA'
     assert result == expected
 
 def test_extract_street_num1():
@@ -82,30 +82,40 @@ def test_extract_street_num2():
 def test_extract_street_num3():
     address = Address('123 main street', 'Los Angeles', 'CA', '12345')
     result = address.extract_street_num()
-    expected = ['123', 'main street']
+    expected = ['123', 'main street'.title()]
     assert result == expected
 
 def test_extract_street_num4():
     address = Address(' 123  main street ', 'Los Angeles', 'CA', '12345')
     result = address.extract_street_num()
-    expected = ['123', 'main street']
+    expected = ['123', 'main street'.title()]
     assert result == expected
 
 def test_replace_street_num1():
     address = Address('123 main street', 'Los Angeles', 'CA', '12345')
     address.replace_street_num('456')
     result = address.street
-    expected = '456 main street' 
+    expected = '456 main street'.title()
     assert result == expected
 
 def test_replace_street_num2():
     address = Address(' 123  main street ', 'Los Angeles', 'CA', '12345')
     address.replace_street_num('456')
     result = address.street
-    expected = '456 main street' 
+    expected = '456 main street'.title()
     assert result == expected
 
 def test_replace_street_num3():
     address = Address(' ', 'Los Angeles', 'CA', '12345')
     with pytest.raises(Exception):
         address.replace_street_num('456')
+
+def test_eq1():
+    address1 = Address('123 main street', 'Los Angeles', 'CA', '12345')
+    address2 = Address('123 main street', 'Los Angeles', 'CA', '12345')
+    assert address1 == address2
+
+def test_eq2():
+    address1 = Address('123 main street', 'Los Angeles', 'CA', '12345')
+    address2 = Address('23 main street', 'Los Angeles', 'CA', '12345')
+    assert address1 != address2

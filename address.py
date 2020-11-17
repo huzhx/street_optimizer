@@ -1,9 +1,14 @@
 class Address:
     def __init__(self, street, city, state, zipcode):
-        self._street = street.strip() if street != None else street
-        self._city = city.strip() if city != None else city
-        self._state = state.strip() if state != None else state
+        self._street = street.strip().title() if street != None else street
+        self._city = city.strip().title() if city != None else city
+        self._state = state.strip().upper() if state != None else state
         self._zipcode = zipcode.strip() if zipcode != None else zipcode
+
+    def __eq__(self, other_address):
+        if not isinstance(other_address, Address):
+            raise Exception('Invalid camparison')
+        return self._street == other_address.street and self._city == other_address.city and self._state == other_address.state and self.zipcode == other_address.zipcode
 
     @property
     def street(self):
@@ -11,7 +16,7 @@ class Address:
     
     @street.setter
     def street(self, new_street):
-        self._street = new_street
+        self._street = new_street.strip().title() if new_street != None else new_street 
 
     @property
     def city(self):
@@ -19,7 +24,7 @@ class Address:
     
     @city.setter
     def city(self, new_city):
-        self._city = new_city
+        self._city = new_city.strip().title() if new_city != None else new_city
 
     @property
     def state(self):
@@ -27,7 +32,7 @@ class Address:
     
     @state.setter
     def state(self, new_state):
-        self._state = new_state
+        self._state = new_state.strip().upper() if new_state != None else new_state
 
     @property
     def zipcode(self):
