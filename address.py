@@ -1,5 +1,6 @@
 class Address:
-    def __init__(self, street, city, state, zipcode):
+    def __init__(self, id, street, city, state, zipcode):
+        self._id = id
         self._street = street.strip().title() if street != None else street
         self._city = city.strip().title() if city != None else city
         self._state = state.strip().upper() if state != None else state
@@ -8,7 +9,11 @@ class Address:
     def __eq__(self, other_address):
         if not isinstance(other_address, Address):
             raise Exception('Invalid camparison')
-        return self._street == other_address.street and self._city == other_address.city and self._state == other_address.state and self.zipcode == other_address.zipcode
+        return self._id == other_address.id and self._street == other_address.street and self._city == other_address.city and self._state == other_address.state and self.zipcode == other_address.zipcode
+
+    @property
+    def id(self):
+        return self._id
 
     @property
     def street(self):
@@ -43,14 +48,16 @@ class Address:
         self._zipcode = new_zipcode
 
     def to_string(self):
-        return "{}, {}, {}, {}".format(
+        return "{}, {}, {}, {}, {}".format(
+            self._id,
             self._street, 
             self._city, 
             self._state, 
             self._zipcode)
 
     def to_string_wo_zip(self):
-        return "{}, {}, {}".format(
+        return "{}, {}, {}, {}".format(
+            self._id,
             self._street, 
             self._city, 
             self._state)
