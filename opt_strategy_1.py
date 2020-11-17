@@ -11,12 +11,13 @@ class OptimizationStrategy1(OptimizationStrategy):
         - If received an optimized address, restore the original street number 
         - Else return None
         '''
-        masked_addr_wo_zip = self.mask_address(org_address).to_string_wo_zip()
+        masked_addr_wo_id_zip = self.mask_address(org_address).to_string_wo_id_zip()
+        print('{} -> {}'.format(org_address.to_string_wo_id_zip(), masked_addr_wo_id_zip))
         api_endpoint = 'https://geomap.ffiec.gov/FFIECGeocMap/GeocodeMap1.aspx/GetGeocodeData'
-        payload = {'sSingleLine': masked_addr_wo_zip, 'iCensusYear': '2020'}
+        payload = {'sSingleLine': masked_addr_wo_id_zip, 'iCensusYear': '2020'}
         resp = consume_api(api_endpoint, payload)
         if (resp['d']['sMsg']== 'Match Found.'):
-            opt_address = Address(resp['d']['sAddress'], resp['d']['sCityName'], resp['d']['sStateAbbr'], resp['d']['sZipCode'])
+            opt_address = Address(org_address.id, resp['d']['sAddress'], resp['d']['sCityName'], resp['d']['sStateAbbr'], resp['d']['sZipCode'])
             org_street_num, _ = org_address.extract_street_num()
             opt_address.replace_street_num(org_street_num)
             return opt_address
