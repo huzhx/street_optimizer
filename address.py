@@ -55,9 +55,8 @@ class Address:
             self._state, 
             self._zipcode)
 
-    def to_string_wo_zip(self):
-        return "{}, {}, {}, {}".format(
-            self._id,
+    def to_string_wo_id_zip(self):
+        return "{}, {}, {}".format(
             self._street, 
             self._city, 
             self._state)
