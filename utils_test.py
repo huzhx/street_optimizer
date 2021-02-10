@@ -1,5 +1,5 @@
 import pytest
-from utils import shift_num, remove_num, remove_after_street_info, consume_api, strip_apt_term
+from utils import shift_num, remove_num, remove_after_street_info, consume_api, strip_apt_term, has_street_term, has_apt_term
 
 def test_shift_num1():
     num = '1234'
@@ -151,4 +151,34 @@ def test_remove_after_street_info1():
     addr = '123 1st ave 123'
     result = remove_after_street_info(addr)
     expected = '123 1st ave'
+    assert result == expected
+
+def test_remove_after_street_info2():
+    addr = '123 1st 123'
+    result = remove_after_street_info(addr)
+    expected = '123 1st 123'
+    assert result == expected
+
+def test_has_street_term1():
+    addr = '123 1st 123'
+    result = has_street_term(addr)
+    expected = False
+    assert result == expected
+
+def test_has_street_term2():
+    addr = '123 1st ave apt123'
+    result = has_street_term(addr)
+    expected = True
+    assert result == expected
+
+def test_has_apt_term1():
+    addr = '123 1st 123'
+    result = has_apt_term(addr)
+    expected = False
+    assert result == expected
+
+def test_has_apt_term2():
+    addr = '123 fline street apt 2'
+    result = has_apt_term(addr)
+    expected = True
     assert result == expected
