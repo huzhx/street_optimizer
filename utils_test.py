@@ -1,5 +1,5 @@
 import pytest
-from utils import shift_num, remove_num, consume_api
+from utils import shift_num, remove_num, consume_api, strip_apt_term
 
 def test_shift_num1():
     num = '1234'
@@ -73,4 +73,64 @@ def test_consume_api2():
     resp = consume_api(api_endpoint, payload)
     result = resp['d']['sMatchAddr']
     expected = '1230 ASTOR DR, ANN ARBOR, MI, 48104'
+    assert result == expected
+
+def test_strip_apt_term1():
+    addr = '1st ave apt'
+    result = strip_apt_term(addr)
+    expected = '1st ave'
+    assert result == expected
+
+def test_strip_apt_term2():
+    addr = '123 1st ave apt 123'
+    result = strip_apt_term(addr)
+    expected = '123 1st ave'
+    assert result == expected
+
+def test_strip_apt_term3():
+    addr = '123 1st ave apt123'
+    result = strip_apt_term(addr)
+    expected = '123 1st ave'
+    assert result == expected
+
+def test_strip_apt_term4():
+    addr = '123 1 st ave spc 123'
+    result = strip_apt_term(addr)
+    expected = '123 1 st ave'
+    assert result == expected
+
+def test_strip_apt_term5():
+    addr = '123 1st ave no 123'
+    result = strip_apt_term(addr)
+    expected = '123 1st ave'
+    assert result == expected
+
+def test_strip_apt_term6():
+    addr = '123 1st ave box 123'
+    result = strip_apt_term(addr)
+    expected = '123 1st ave'
+    assert result == expected
+
+def test_strip_apt_term7():
+    addr = '123 1st cr unit 123'
+    result = strip_apt_term(addr)
+    expected = '123 1st cr'
+    assert result == expected
+
+def test_strip_apt_term8():
+    addr = '123 1st dr unit a'
+    result = strip_apt_term(addr)
+    expected = '123 1st dr'
+    assert result == expected
+
+def test_strip_apt_term9():
+    addr = '123 1 st apt 123'
+    result = strip_apt_term(addr)
+    expected = '123 1 st'
+    assert result == expected
+
+def test_strip_apt_term10():
+    addr = '123 1st apt a'
+    result = strip_apt_term(addr)
+    expected = '123 1st'
     assert result == expected

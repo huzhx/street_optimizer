@@ -17,7 +17,8 @@ def shift_num(num):
     return str(num)
 
 def remove_num(addr):
-    ''' Return a string
+    ''' Input address in string 
+        Return a string
     if a number is concatenated with a string like xxxstr, leave the number since it is normally part of the street name. 
     However, if a number appears alone or concatenated after a string like strxxx, remove the number
     '''
@@ -29,3 +30,14 @@ def consume_api(api_endpoint, payload):
     if (resp.status_code != 200 and resp.status_code != 201):
         raise Exception('POST {} {}'.format(api_endpoint, resp.status_code))
     return resp.json()
+
+def strip_apt_term(addr):
+    ''' Input addresses in string
+        Return a string
+    '''
+    apt_terms = ["apartment", "ap", "apt", "basement", "box", "bsmt", "building", "bldg", "department", "dept", "floor", "fl", "front", "frnt", "hanger", "hngr", "key", "lobby", "lbby", "lot", "lower", "lowr", "no", "office", "ofc", "penthouse", "ph", "pier", "rear", "room", "rm", "side", "slip", "space", "spc", "stop", "suite", "ste", "trailer", "trlr", "unit", "upper", "uppr", "#"]
+    
+    for apt_term in apt_terms:
+        if (apt_term in addr):
+            addr = addr.split(apt_term)[0].strip()
+    return addr
