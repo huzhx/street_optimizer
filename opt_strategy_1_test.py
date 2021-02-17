@@ -64,3 +64,24 @@ def test_get_opt_address4():
     result = os1.get_opt_address(address)
     expected = Address('1', '1510 W 124TH ST', 'LOS ANGELES', 'CA', '90047')
     assert result == expected
+
+def test_missing_street_apt_term1():
+    os1 = OptimizationStrategy1()
+    address = Address('1', '417 S', 'Los Angeles','CA', '90013')
+    result = os1.missing_street_apt_term(address)
+    expected = True
+    assert result == expected
+
+def test_missing_street_apt_term2():
+    os1 = OptimizationStrategy1()
+    address = Address('1', '1510 124th Street Apt 123', 'Los Angeles','CA', '90047')
+    result = os1.missing_street_apt_term(address)
+    expected = False
+    assert result == expected
+
+def test_missing_street_apt_term3():
+    os1 = OptimizationStrategy1()
+    address = Address('1', '1510 124th Apt 123', 'Los Angeles','CA', '90047')
+    result = os1.missing_street_apt_term(address)
+    expected = False
+    assert result == expected

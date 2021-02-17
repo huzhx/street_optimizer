@@ -53,3 +53,12 @@ class OptimizationStrategy1(OptimizationStrategy):
         masked_address = copy.deepcopy(org_address)
         masked_address.street = masked_street
         return masked_address
+
+    def missing_street_apt_term(self, org_address: Address):
+        ''' Return an address
+        - Find the address that has no street term or apt term
+        '''
+        org_street = org_address.street
+        if (has_street_term(org_street) == False and has_apt_term(org_street) == False):
+            return True
+        return False
